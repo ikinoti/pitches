@@ -4,8 +4,10 @@ class Config:
     '''
     General configuration parent class
     '''
-    SECRET_KEY = 'Theseconds'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://kinoti:12qwerty34@localhost/pitches'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     
     #  email configurations
@@ -14,6 +16,8 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+
+    
     SUBJECT_PREFIX = 'sixy seconds Pitch'
     SENDER_EMAIL = 'izooknot@gmail.com'
 
@@ -40,7 +44,7 @@ class DevConfig(Config):
         Config: The parent configuration class with General configuration settings
     '''
     
-
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://kinoti:12qwerty34@localhost/pitches'
     DEBUG = True
 
 config_options = {
