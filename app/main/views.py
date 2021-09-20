@@ -115,3 +115,35 @@ def category(id):
 
     pitches_in_category = Pitches.get_pitch(id)
     return render_template('category.html' ,category= category, pitches= pitches_in_category)
+
+@main.route('/pitch/comments/new/<int:id>',methods = ['GET','POST'])
+@login_required
+def new_comment(id):
+    form = CommentsForm()
+    vote_form = UpvoteForm()
+    if form.validate_on_submit():
+        new_comment = Comment(pitch_id =id,comment=form.comment.data,username=current_user.username,votes=form.vote.data)
+        new_comment.save_comment()
+        return redirect(url_for('main.index'))
+    #title = f'{pitch_result.id} review'
+    return render_template('new_comment.html',comment_form=form, vote_form= vote_form)
+
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@login_required
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path 
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
