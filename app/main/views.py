@@ -102,3 +102,16 @@ def new_pitch():
         return redirect(url_for('main.index'))
 
     return render_template('new_pitch.html', new_pitch_form= form, category= category)
+
+@main.route('/category/<int:id>')
+def category(id):
+    '''
+    function that returns pitches based on the entered category id
+    '''
+    category = PitchCategory.query.get(id)
+
+    if category is None:
+        abort(404)
+
+    pitches_in_category = Pitches.get_pitch(id)
+    return render_template('category.html' ,category= category, pitches= pitches_in_category)
