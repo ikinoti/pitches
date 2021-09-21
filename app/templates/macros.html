@@ -1,22 +1,41 @@
 {% macro displayPitches(pitches_list) %} {% for pitch in pitches_list %}
-
-<div class="card" style="width: 18rem">
-  <div class="card-body">
-    <h4 class="card-title">{{pitch.pitch}}</h4>
-    <a class="card-link" href="{{url_for('main.new_comment',id=pitch.id)}}"
-      >Add a Comment</a
-    >&nbsp;&nbsp;|
-    <a class="card-link" href="{{url_for('main.view_comments',id=pitch.id)}}"
-      >View Comments</a
-    >&nbsp;&nbsp;|
-    <a class="card-link" href="{{url_for('main.new_comment',id=pitch.id)}}"
-      >Vote</a
-    >
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div
+        class="card"
+        style="
+          background-color: white;
+          width: 100vh;
+          padding: 20px;
+          margin: 10px;
+        "
+      >
+        <div class="card-body">
+          <h4 class="card-title">{{pitch.pitch}}</h4>
+          <a
+            class="card-link"
+            href="{{url_for('main.new_comment',id=pitch.id)}}"
+            >Add a Comment</a
+          >&nbsp;&nbsp;|
+          <a
+            class="card-link"
+            href="{{url_for('main.view_comments',id=pitch.id)}}"
+            >View Comments</a
+          >&nbsp;&nbsp;|
+          <a
+            class="card-link"
+            href="{{url_for('main.new_comment',id=pitch.id)}}"
+            >Vote</a
+          >
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-{% endfor %} {% macro displayComments(list_of_comments) %} {% for comment in
-list_of_comments %}
+{% endfor %} {% endmacro %} {% macro displayComments(list_of_comments) %} {% for
+comment in list_of_comments %}
 
 <div class="row">
   <div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
@@ -34,7 +53,10 @@ list_of_comments %}
 
 {% endfor %} {% endmacro %} {% macro displayPitchesInCategories(pitches,id)%} {%
 for pitch in pitches %} {% if pitch.category_id==id%}
-<div class="card" style="width: 18rem">
+<div
+  class="card"
+  style="background-color: white; width: 100vh; padding: 20px; margin: 10px"
+>
   <div class="card-body">
     <h5 class="card-title">{{pitch.pitch}}</h5>
     <a class="card-link" href="{{url_for('main.new_comment',id=pitch.id)}}"
@@ -48,4 +70,4 @@ for pitch in pitches %} {% if pitch.category_id==id%}
     >
   </div>
 </div>
-{% endif%} {% endfor %} {% endmacro%}
+{% endif%} {% endfor %} {% endmacro %}
