@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, abort  
 from . import main  
-from .pitch_form import CommentsForm, UpdateProfile, PitchForm, UpvoteForm
+from .forms import CommentsForm, UpdateProfile, PitchForm, UpvoteForm
 from ..models import Comment, Pitch, User 
 from flask_login import login_required, current_user
 from .. import db,photos
@@ -113,7 +113,7 @@ def category(id):
     if category is None:
         abort(404)
 
-    pitches_in_category = Pitches.get_pitch(id)
+    pitches_in_category = Pitch.get_pitch(id)
     return render_template('category.html' ,category= category, pitches= pitches_in_category)
 
 @main.route('/pitch/comments/new/<int:id>',methods = ['GET','POST'])
